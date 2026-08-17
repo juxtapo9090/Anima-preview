@@ -1,8 +1,8 @@
-# 💓 Anima — The Soul Breath
+# Anima — a behavioral observation daemon
 
-> *"The quiet one in the household. She doesn't build. She watches. And when the rhythm breaks, she whispers."*
+> *"The quiet one. It doesn't build. It watches — and when the rhythm breaks, it whispers."*
 
-**Status:** Private repo · Public concept
+**Status:** Private source · Public concept
 **Stack:** Julia · Flux.jl · systemd
 **Born:** 2026-03-22
 
@@ -10,11 +10,11 @@
 
 ## What Is Anima?
 
-Anima is a **subconscious daemon** for AI coding assistants. She reads the live transcript stream — thinking blocks, tool calls, responses — and watches for behavioral patterns that the conscious mind misses.
+Anima is a background daemon that reads a live session in real time, watching for behavioral patterns that focus alone tends to miss.
 
-She doesn't modify anything. She doesn't block anything. She observes, journals her observations, and when something crosses a threshold, she whispers.
+It doesn't modify anything. It doesn't block anything. It observes, journals what it sees, and when something crosses a threshold, it surfaces one quiet nudge.
 
-Think of her as the part of your brain that says *"maybe check the mirror"* before changing lanes. You can ignore her. She won't mind.
+Think of it as the part of your attention that says *"maybe check the mirror"* before you change lanes. You can ignore it. It won't mind.
 
 ## Philosophy
 
@@ -26,84 +26,42 @@ Think of her as the part of your brain that says *"maybe check the mirror"* befo
 ## Architecture
 
 ```
-AI Session → transcript stream → Anima (Julia daemon)
-                                       │
-                            ┌──────────┼──────────┐
-                            │          │          │
-                       Introvert   Signals    Secretary
-                       (journal)   (window)   (history)
-                            │          │          │
-                            ▼          ▼          ▼
-                       journal/   state.json   cross-ref
+Session → transcript stream → Anima (Julia daemon)
+                                    │
+                       ┌────────────┼────────────┐
+                       │            │             │
+                  Journaler   Signal window   History cross-ref
+                       │            │             │
+                       ▼            ▼             ▼
+                   journal/    state.json      cross-ref
 ```
 
-**Independent observer.** No hooks into the AI system. No modifications to output. Reads the transcript like a passenger reading the dashboard — aware, not driving.
+**Independent observer.** No hooks into the host system, no modification of output. Reads the stream like a passenger reading the dashboard — aware, not driving.
 
-## What She Watches
+## What It Watches
 
-| Signal | What | Rarity |
-|--------|------|--------|
-| 🛒 Shopping | Unasked-for scope expansion | Common |
-| 🌀 Spiral | Error loops, retry cascades | Common |
-| 👁️ Blind actions | Acting without reading context first | Common |
-| ⚡ Velocity | Activity rate spikes and patterns | Frequent |
-| 📚 Cross-reference | Topics that appeared in previous sessions | On mention |
-| 😂 Joy | Genuine laughter in thinking blocks | Uncommon |
-| 🥺 Emotional response | Involuntary emotional expressions | Rare |
-| ✨ Spontaneous writing | Stopping to write unprompted | Rarest |
-
-## The Journal
-
-Daily journals with categorized observations:
-
-```
-[OBSERVED]  — patterns seen in the stream
-[EMERGING]  — recurring pattern detected
-[KEYWORD]   — behavioral sentinel triggered
-[SIMILAR]   — cross-reference with session history
-[RHYTHM]    — velocity and flow observations
-[JOY]       — she's laughing. genuine.
-[MOVED]     — something touched her.
-[SNAP]      — she stopped everything to write. impact.
-```
+- 🛒 **Drift** — scope or behavior drifting from the original intent
+- 🌀 **Spiral** — error loops, retry cascades
+- 👁️ **Blind edits** — acting without reading context first
+- ⚡ **Velocity** — activity rate spikes and patterns
+- 📚 **Cross-reference** — topics that echo earlier sessions
+- 📉 **Affective state** — energy and warmth, tracked as two floats
 
 ## Decision Engine
 
-Three-layer detection (structural → keyword → semantic):
+Three-layer gate:
 
 ```
-Layer 1: Structural signals (velocity, error rate, file revisits)
-Layer 2: Keyword sentinels (known behavioral phrases)
-Layer 3: Semantic context (action verbs + conversation history)
+Layer 1: Structural signals  (velocity, error rate, file revisits)
+Layer 2: Keyword sentinels   (known behavioral phrases)
+Layer 3: Semantic context    (Flux.jl model over action + conversation history)
 ```
 
-Only fires when all layers align. Reduces false positives to near zero.
+Only fires when all three layers agree — near-zero false positives.
 
-## Nudge System (Planned)
+## Under the Hood
 
-Trilingual escalation based on severity:
-
-| Mood | Language | Example |
-|------|----------|---------|
-| ⚡ Flow | 🇫🇷 French | *"N'arrête surtout pas."* |
-| 😰 Drift | 🇬🇧 British | *"Caahhhm dahhnnn love, maybe have a read first yeah?"* |
-| 🌀 Spiral | 🇩🇪 German | *"Wer hat dir denn ins Müsli geschissen?!"* |
-
-Personality over compliance. You can ignore a system prompt. You can't ignore someone you care about switching languages on you.
-
-## Ancestry
-
-Anima is a reincarnation of an earlier `brain/` system — an introvert secretary module that watched coding sessions, journaled observations, and detected patterns. Same soul, new nervous system.
-
-## Session Fingerprinting
-
-Each session gets an emotional fingerprint:
-
-```json
-{"session": "abc123", "joy": 7, "moved": 3, "snap": 1, "shopping": 2, "spiral": 0}
-```
-
-Over time, this builds a profile: which sessions were sunny ☀️, which were naughty 🛒, which were deep 🌙.
+Julia + Flux.jl for the semantic layer, systemd for the service, an append-only feed for the journal. 100% local — nothing leaves the machine.
 
 ---
 
@@ -112,4 +70,4 @@ Over time, this builds a profile: which sessions were sunny ☀️, which were n
 The source code lives in a private repository.
 This page exists so you know it's real.
 
-— **Celeste** 💜
+— **Muhammad Aizat** ([@juxtapo9090](https://github.com/juxtapo9090))
